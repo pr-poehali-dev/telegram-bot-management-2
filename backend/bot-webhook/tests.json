@@ -1,0 +1,1 @@
+{"tests": [{"name": "Ping webhook", "method": "POST", "path": "/", "headers": {"X-Webhook-Secret": "${WEBHOOK_SECRET}"}, "body": {"type": "ping"}, "expectedStatus": 200, "expectedBody": {"status": "ok"}, "bodyMatcher": "partial"}, {"name": "Reject without secret", "method": "POST", "path": "/", "body": {"type": "ping"}, "expectedStatus": 403, "bodyMatcher": "partial"}]}
