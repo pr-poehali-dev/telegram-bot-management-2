@@ -1,9 +1,10 @@
-import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 interface SidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
+  collapsed: boolean;
+  onCollapsedChange: (collapsed: boolean) => void;
 }
 
 const menuItems = [
@@ -18,9 +19,12 @@ const menuItems = [
   { id: "settings", label: "Настройки", icon: "Settings" },
 ];
 
-const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
-  const [collapsed, setCollapsed] = useState(false);
-
+const Sidebar = ({
+  activeSection,
+  onSectionChange,
+  collapsed,
+  onCollapsedChange,
+}: SidebarProps) => {
   return (
     <aside
       className={`fixed left-0 top-0 h-screen z-50 flex flex-col transition-all duration-300 ${
@@ -33,8 +37,12 @@ const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
         </div>
         {!collapsed && (
           <div className="animate-fade-in overflow-hidden">
-            <p className="font-semibold text-sm text-[hsl(var(--sidebar-accent-foreground))]">TG Bot Panel</p>
-            <p className="text-[11px] text-[hsl(var(--sidebar-foreground))]">Управление ботом</p>
+            <p className="font-semibold text-sm text-[hsl(var(--sidebar-accent-foreground))]">
+              TG Bot Panel
+            </p>
+            <p className="text-[11px] text-[hsl(var(--sidebar-foreground))]">
+              Управление ботом
+            </p>
           </div>
         )}
       </div>
@@ -47,15 +55,18 @@ const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
               key={item.id}
               onClick={() => onSectionChange(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group
-                ${isActive
-                  ? "gradient-bg text-white shadow-lg shadow-[hsl(250,90%,65%)]/20"
-                  : "text-[hsl(var(--sidebar-foreground))] hover:bg-[hsl(var(--sidebar-accent))] hover:text-[hsl(var(--sidebar-accent-foreground))]"
+                ${
+                  isActive
+                    ? "gradient-bg text-white shadow-lg shadow-[hsl(250,90%,65%)]/20"
+                    : "text-[hsl(var(--sidebar-foreground))] hover:bg-[hsl(var(--sidebar-accent))] hover:text-[hsl(var(--sidebar-accent-foreground))]"
                 }`}
             >
               <Icon
                 name={item.icon}
                 size={18}
-                className={`shrink-0 transition-transform duration-200 ${!isActive ? "group-hover:scale-110" : ""}`}
+                className={`shrink-0 transition-transform duration-200 ${
+                  !isActive ? "group-hover:scale-110" : ""
+                }`}
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
             </button>
@@ -65,7 +76,7 @@ const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
 
       <div className="p-2 border-t border-[hsl(var(--sidebar-border))]">
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => onCollapsedChange(!collapsed)}
           className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm text-[hsl(var(--sidebar-foreground))] hover:bg-[hsl(var(--sidebar-accent))] transition-all duration-200"
         >
           <Icon

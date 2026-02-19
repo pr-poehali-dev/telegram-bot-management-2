@@ -1,22 +1,18 @@
-const data = [
-  { day: "Пн", value: 65 },
-  { day: "Вт", value: 85 },
-  { day: "Ср", value: 45 },
-  { day: "Чт", value: 95 },
-  { day: "Пт", value: 75 },
-  { day: "Сб", value: 55 },
-  { day: "Вс", value: 40 },
-];
+interface ActivityChartProps {
+  data: { day: string; value: number }[];
+}
 
-const maxValue = Math.max(...data.map(d => d.value));
+const ActivityChart = ({ data }: ActivityChartProps) => {
+  const maxValue = data.length > 0 ? Math.max(...data.map((d) => d.value)) : 1;
 
-const ActivityChart = () => {
   return (
     <div className="glass rounded-2xl p-6 opacity-0 animate-fade-in stagger-3">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-base font-semibold text-foreground">Активность</h3>
-          <p className="text-sm text-muted-foreground mt-0.5">Сообщения за неделю</p>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Сообщения за неделю
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full gradient-bg" />
@@ -32,7 +28,10 @@ const ActivityChart = () => {
               <span className="text-xs font-medium text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
                 {item.value}
               </span>
-              <div className="w-full relative group cursor-pointer" style={{ height: `${height}%` }}>
+              <div
+                className="w-full relative group cursor-pointer"
+                style={{ height: `${height}%` }}
+              >
                 <div
                   className="absolute inset-0 rounded-xl gradient-bg opacity-80 group-hover:opacity-100 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[hsl(250,90%,65%)]/30"
                   style={{
